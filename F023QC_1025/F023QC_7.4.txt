@@ -1,0 +1,9 @@
+Γkategoriakategoria,avg(ear)((termek))
+
+Γtermektermek,count(*) (komponens)
+
+Γtermeknevtermeknev,count(*) (komponens k ⋈tkod =k.termek termek t)
+
+Π.a.* ( ნ nev= x (termek) t ⋈ t.tkod = k.termek komponens k ⋈ a.akod= k.alkatresz alkatresz a)
+
+Π kategoria ( ნ av > x (Γ kategoria kategoria, avg(ar) av ( (termek)))

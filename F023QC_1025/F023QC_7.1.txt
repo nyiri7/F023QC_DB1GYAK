@@ -1,0 +1,5 @@
+Πcím(könyv)
+σar<2000(könyv)
+Πcím(σar<1000(könyv))
+Πtárgy(könyv)
+Πcím,ár(σtárgy=’AB’(könyv))

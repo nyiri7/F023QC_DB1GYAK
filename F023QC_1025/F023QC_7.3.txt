@@ -1,0 +1,9 @@
+Πtkod,nev(ςkategoria = x(termek))
+
+Πtermeknev,gyartonev(termek t⋈termekgyarto = gyartoadoszam gyarto gy)
+
+Πgyartonev(ςkategoria = x(termek)t ⋈termekgyarto =gyarto adoszam gyarto gy)
+
+Γcount(*)(ςear>Y (termek))
+
+Γcount(*) (gyarto gy ⋈termekgyarto=gyartoadoszam ςear>Y (termek) t )
