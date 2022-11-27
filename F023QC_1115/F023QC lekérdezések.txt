@@ -1,0 +1,42 @@
+
+SELECT oktato.nev FROM oktato;
+
+SELECT `oktato`.`nev`, `targy`.`megnevezes` FROM `oktato` 
+LEFT JOIN `oktat` ON `oktat`.`oktato_neptunkod` = `oktato`.`neptunkod` 
+LEFT JOIN `targy` ON `oktat`.`targy_kod` = `targy`.`kod`WHERE `targy`.`megnevezes` != "NULL";
+
+SELECT `oktato`.`nev`, `targy`.`megnevezes`FROM `oktato` 
+LEFT JOIN `oktat` ON `oktat`.`oktato_neptunkod` = `oktato`.`neptunkod` 
+LEFT JOIN `targy` ON `oktat`.`targy_kod` = `targy`.`kod`;
+
+
+SELECT `oktato`.`nev`, `targy`.`megnevezes`, `oktato`.`tanszek`FROM `oktato` 
+LEFT JOIN `oktat` ON `oktat`.`oktato_neptunkod` = `oktato`.`neptunkod` 
+LEFT JOIN `targy` ON `oktat`.`targy_kod` = `targy`.`kod`WHERE `oktato`.`tanszek` = "AIF";
+
+SELECT AVG(targy.kredit)FROM targy;
+
+SELECT COUNT(`oktato`.`tanszek`)FROM `oktato` 
+LEFT JOIN `oktat` ON `oktat`.`oktato_neptunkod` = `oktato`.`neptunkod` 
+LEFT JOIN `targy` ON `oktat`.`targy_kod` = `targy`.`kod`WHERE `oktato`.`tanszek` = "AIF";
+
+SELECT targy.megnevezes, targy.kredit FROM targy WHERE targy.kredit = 5;
+
+
+SELECT `oktato`.`nev`, `targy`.`megnevezes`FROM `oktato` 
+LEFT JOIN `oktat` ON `oktat`.`oktato_neptunkod` = `oktato`.`neptunkod` 
+LEFT JOIN `targy` ON `oktat`.`targy_kod` = `targy`.`kod`WHERE `targy`.`megnevezes` IS NULL;
+
+SELECT `halgato`.`nev`, `halgat`.`targy_kod`FROM `halgato` 
+LEFT JOIN `halgat` ON `halgat`.`halgato_neptunkod` = `halgato`.`neptunkod`WHERE `halgat`.`targy_kod` IS NULL;
+
+SELECT halgato.nev, halgato.szuld FROM halgato;
+
+SELECT oktato.tanszek, COUNT(oktato.nev) FROM oktato GROUP BY oktato.tanszek;
+
+SELECT targy.megnevezes, COUNT(halgat.halgato_neptunkod) FROM targy
+ 
+LEFT JOIN halgat ON halgat.targy_kod = targy.kod GROUP BY targy.megnevezes;
+
+SELECT `oktato`.`nev`, COUNT(`oktat`.`targy_kod`) AS db FROM `oktato` 
+LEFT JOIN `oktat` ON `oktat`.`oktato_neptunkod` = `oktato`.`neptunkod` GROUP BY `oktato`.`nev` HAVING db > 2;
