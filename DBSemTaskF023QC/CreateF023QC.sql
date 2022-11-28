@@ -1,0 +1,94 @@
+DROP DATABASE IF EXISTS éttermek;
+CREATE DATABASE éttermek;
+
+DROP TABLE IF EXISTS éttermek.étterem;
+CREATE TABLE éttermek.étterem(
+    étteremID INT PRIMARY KEY,
+    cím VARCHAR(50) NOT NULL,
+    elérhetőség VARCHAR(100) NOT NULL
+);
+
+DROP TABLE IF EXISTS éttermek.étterem_nyitvatartás;
+CREATE TABLE éttermek.étterem_nyitvatartás(
+    nyitvatartás VARCHAR(30) NOT NULL,
+    étteremID INT NOT NULL,
+    FOREIGN KEY (étteremID) REFERENCES éttermek.étterem(étteremID)
+);
+
+DROP TABLE IF EXISTS éttermek.futár;
+CREATE TABLE éttermek.futár(
+    futárID INT PRIMARY KEY,
+    elérhető BOOLEAN NOT NULL,
+    név VARCHAR(30) NOT NULL,
+    telefonszám VARCHAR(30),
+    típus VARCHAR(30) NOT NULL,
+    étteremID INT NOT NULL,
+    FOREIGN KEY (étteremID) REFERENCES éttermek.étterem(étteremID)
+);
+
+DROP TABLE IF EXISTS éttermek.vevő;
+CREATE TABLE éttermek.vevő(
+    vevőID INT PRIMARY KEY,
+    név VARCHAR(30) NOT NULL,
+    telefonszám VARCHAR(30),
+    irányítószám INT(4) NOT NULL,
+    közterület_neve VARCHAR(30) NOT NULL,
+    közterület_megnevezése VARCHAR(10) NOT NULL,
+    házszám INT NOT NULL,
+    emelet_ajtó VARCHAR(5)
+);
+
+DROP TABLE IF EXISTS éttermek.bankkártya;
+CREATE TABLE éttermek.bankkártya(
+    kártyaszám VARCHAR(20) PRIMARY KEY,
+    lejárati_dátum DATE NOT NULL,
+    biztonsági_kód INT(3) NOT NULL,
+    kártyán_szereplő_név VARCHAR(30) NOT NULL,
+    típus VARCHAR(15) NOT NULL,
+    vevőID INT NOT NULL,
+    FOREIGN KEY (vevőID) REFERENCES éttermek.vevő(vevőID)
+);
+
+DROP TABLE IF EXISTS éttermek.rendelés;
+CREATE TABLE éttermek.rendelés(
+    rendelésID INT PRIMARY KEY,
+    megjegyzés VARCHAR(100),
+    rendelés_ideje VARCHAR(30) NOT NULL,
+    étteremID INT NOT NULL,
+    vevőID INT NOT NULL,
+    FOREIGN KEY (étteremID) REFERENCES éttermek.étterem(étteremID),
+    FOREIGN KEY (vevőID) REFERENCES éttermek.vevő(vevőID)
+);
+
+DROP TABLE IF EXISTS éttermek.termék;
+CREATE TABLE éttermek.termék(
+    termékID INT PRIMARY KEY,
+    név VARCHAR(50) NOT NULL,
+    ár DECIMAL NOT NULL,
+    elkészítési_idő VARCHAR(15) NOT NULL
+);
+
+DROP TABLE IF EXISTS éttermek.termék_összetevők;
+CREATE TABLE éttermek.termék_összetevők(
+    összetevők VARCHAR(30),
+    termékID INT NOT NULL,
+    FOREIGN KEY (termékID) REFERENCES éttermek.termék(termékID)
+);
+
+DROP TABLE IF EXISTS éttermek.RT;
+CREATE TABLE éttermek.RT(
+    rendelésID INT NOT NULL,
+    termékID INT NOT NULL,
+    mennyiség VARCHAR(30) NOT NULL,
+    FOREIGN KEY (rendelésID) REFERENCES éttermek.rendelés(rendelésID),
+    FOREIGN KEY (termékID) REFERENCES éttermek.termék(termékID)
+);
+
+DROP TABLE IF EXISTS éttermek.van;
+CREATE TABLE éttermek.van(
+    étteremID INT NOT NULL,
+    termékID INT NOT NULL,
+    beszállítási_idő VARCHAR(30) NOT NULL,
+    FOREIGN KEY (étteremID) REFERENCES éttermek.étterem(étteremID),
+    FOREIGN KEY (termékID) REFERENCES éttermek.termék(termékID)
+);

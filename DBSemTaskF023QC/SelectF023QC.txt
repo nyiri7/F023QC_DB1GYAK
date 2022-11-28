@@ -1,0 +1,53 @@
+SELECT név FROM éttermek.futár
+WHERE típus = 'Cantain';
+
+SELECT DISTINCT cím FROM éttermek.étterem ét
+JOIN éttermek.futár fut ON fut.étteremID = ét.étteremID
+WHERE fut.név LIKE 'Gulyás%';
+
+SELECT DISTINCT cím FROM éttermek.étterem ét
+JOIN éttermek.futár fut ON fut.étteremID = ét.étteremID
+WHERE fut.név LIKE 'Gulyás%';
+
+SELECT név FROM éttermek.termék
+ORDER BY elkészítési_idő DESC
+LIMIT 1;
+
+SELECT név, AVG(ár) AS Átlagnál_nagyobb_ár FROM éttermek.termék
+GROUP BY név
+HAVING AVG(ár) > (SELECT AVG(ár) FROM éttermek.termék);
+
+SELECT * FROM éttermek.vevő vev
+WHERE vev.vevőID NOT IN (SELECT DISTINCT vevőID FROM éttermek.bankkártya);
+
+SELECT elérhetőség FROM éttermek.étterem ét
+JOIN éttermek.van van ON van.étteremID = ét.étteremID
+ORDER BY van.beszállítási_idő DESC
+LIMIT 1;
+
+SELECT név FROM éttermek.termék term
+JOIN éttermek.van van ON van.termékID = term.termékID
+JOIN éttermek.étterem ét ON ét.étteremID = van.étteremID
+WHERE ét.elérhetőség LIKE '%borcsaetterem.hu%';
+
+SELECT név, telefonszám FROM éttermek.vevő
+WHERE emelet_ajtó IS NULL AND telefonszám IS NOT NULL;
+
+SELECT  irányítószám,
+        közterület_neve,
+        közterület_megnevezése,
+        házszám,
+        emelet_ajtó,
+        rend.megjegyzés
+FROM éttermek.vevő vev
+JOIN éttermek.rendelés rend ON rend.vevőID = vev.vevőID
+WHERE rend.megjegyzés IS NOT NULL;
+
+SELECT cím FROM éttermek.étterem ét
+JOIN éttermek.futár fut ON fut.étteremID = ét.étteremID
+WHERE fut.elérhető = false
+GROUP BY cím;
+
+SELECT DISTINCT MAX(ár) AS Maximum_ár, név FROM éttermek.termék term
+JOIN éttermek.RT rt ON rt.termékID = term.termékID
+WHERE rt.mennyiség = '1/2 adag';
